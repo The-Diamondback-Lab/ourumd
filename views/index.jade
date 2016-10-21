@@ -1,0 +1,8 @@
+html
+	head
+	body
+		table
+			-each category in categories
+				tr=category.text
+				-each col in category
+					td=col

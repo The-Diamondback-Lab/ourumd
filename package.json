@@ -1,0 +1,11 @@
+{
+  "name": "ourumd",
+  "version": "1.0.0",
+  "description": "Web application to help UMD  students find classes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
