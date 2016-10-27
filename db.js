@@ -1,6 +1,6 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : '206.196.185.40',
+  host     : '108.179.232.92',
   user     : 'dbklab_dbklab',
   password : 'dbklab',
   database : 'dbklab_testourumd'
