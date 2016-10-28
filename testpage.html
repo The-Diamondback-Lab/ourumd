@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Testing data</title>
+        <script
+			  src="https://code.jquery.com/jquery-3.1.1.js"
+			  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+			  crossorigin="anonymous"></script>
+        <script>
+            function search() {
+                var text = $("#search").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/grades/'+text,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        results = [];
+                        num_A = 0;
+                        num_B = 0;
+                        num_C = 0;
+                        num_D = 0;
+                        num_fail = 0;
+                        for(i = 0; i < data.length; i++) {
+                            num_A += parseInt(data[i]["COL 5"])
+                            num_B += parseInt(data[i]["COL 8"])
+                            num_C += parseInt(data[i]["COL 11"])
+                            num_D += parseInt(data[i]["COL 14"])
+                            num_fail += parseInt(data[i]["COL 17"])
+                        }
+                        $("#result").text("A: "+num_A.toString() + " B: "+num_B.toString() + " C: "+num_C.toString()+" D: "+num_D.toString() + " RIP: "+num_fail.toString());
+                    },
+                    error:function(err){
+                        $("#result").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+        </script>
+    </head>
+    <body>
+        <input id="search" type="text"/>
+        <button onclick="search()">Search</button>
+        <div id="result"></div>
+    </body>
+</html>

@@ -28,8 +28,7 @@ app.get('/prof/:prof/:class',function(req,res) {
         }
             
         console.log( user);
-        res.setHeader("Content-Type", "text/json");
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        
         res.end(JSON.stringify(result));
     });
 })
