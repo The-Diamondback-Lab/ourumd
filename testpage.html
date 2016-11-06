@@ -11,7 +11,7 @@
                 
                 $.ajax({
                     type: 'GET',
-                    url: 'http://127.0.0.1:3000/grades/'+text,
+                    url: 'http://127.0.0.1:3000/grades/class/'+text,
                     crossDomain: true,
                     "Access-Control-Allow-Origin":"*",
                     "Content-Type":"text/json",
@@ -35,8 +35,10 @@
         </script>
     </head>
     <body>
-        <input id="search" type="text"/>
-        <button onclick="search()">Search</button>
-        <div id="result"></div>
+        <div>
+            <input id="search_gc" type="text"/>
+            <button onclick="grades_class()">Search</button>
+            <div id="result"></div>
+        </div>
     </body>
 </html>
