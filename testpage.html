@@ -6,8 +6,8 @@
 			  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
 			  crossorigin="anonymous"></script>
         <script>
-            function search() {
-                var text = $("#search").val();
+            function grades_class() {
+                var text = $("#search_gc").val();
                 
                 $.ajax({
                     type: 'GET',
@@ -16,18 +16,138 @@
                     "Access-Control-Allow-Origin":"*",
                     "Content-Type":"text/json",
                     success:function(data){
-                        console.log(data)
-                        
-                        num_A = data["A"];
-                        num_B = data["B"];
-                        num_C = data["C"];
-                        num_D = data["D"];
-                        num_fail = data["Fs"];
-                        
-                        $("#result").text("A: "+num_A.toString() + " B: "+num_B.toString() + " C: "+num_C.toString()+" D: "+num_D.toString() + " RIP: "+num_fail.toString());
+                        $("#result_gc").text(JSON.stringify(data));
                     },
                     error:function(err){
-                        $("#result").text(JSON.stringify(err));
+                        $("#result_gc").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function grades_prof() {
+                var text = $("#search_gp").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/grades/prof/'+text,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_gp").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_gp").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function grades_class_prof() {
+                var prof = $("#search_gcp_p").val();
+                var course = $("#search_gcp_c").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/grades/class/'+course+'/prof/'+prof,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_gcp").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_gcp").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function class_() {
+                var text = $("#search_c").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/class/'+text,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_c").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_c").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function class_prof() {
+                var course = $("#search_cp_c").val();
+                var prof = $("#search_cp_p").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/class/'+course+"/prof/"+prof,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_cp").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_cp").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function class_proflist() {
+                var text = $("#search_cpl").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/class/'+text+'/proflist',
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_cpl").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_cpl").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function prof_classlist() {
+                var text = $("#search_pcl").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/prof/'+text+'/classlist',
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_pcl").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_pcl").text(JSON.stringify(err));
+                    }
+                });
+            }
+            
+            function prof() {
+                var text = $("#search_p").val();
+                
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://127.0.0.1:3000/prof/'+text,
+                    crossDomain: true,
+                    "Access-Control-Allow-Origin":"*",
+                    "Content-Type":"text/json",
+                    success:function(data){
+                        $("#result_p").text(JSON.stringify(data));
+                    },
+                    error:function(err){
+                        $("#result_p").text(JSON.stringify(err));
                     }
                 });
             }
@@ -36,9 +156,56 @@
     </head>
     <body>
         <div>
+            <h3>Example of /grades/class/[class]</h3>
             <input id="search_gc" type="text"/>
             <button onclick="grades_class()">Search</button>
-            <div id="result"></div>
+            <div id="result_gc"></div>
         </div>
+        <div>
+            <h3>Example of /grades/prof/[professor]</h3>
+            <input id="search_gp" type="text"/>
+            <button onclick="grades_prof()">Search</button>
+            <div id="result_gp"></div>
+        </div>
+        <div>
+            <h3>Example of /grades/class/[class]/prof/[professor]</h3>
+            <input id="search_gcp_c" type="text"/>
+            <input id="search_gcp_p" type="text"/>
+            <button onclick="grades_class_prof()">Search</button>
+            <div id="result_gcp"></div>
+        </div>
+        <div>
+            <h3>Example of /class/[class]</h3>
+            <input id="search_c" type="text"/>
+            <button onclick="class_()">Search</button>
+            <div id="result_c"></div>
+        </div>
+        <div>
+            <h3>Example of /class/[class]/prof/[professor]</h3>
+            <input id="search_cp_c" type="text"/>
+            <input id="search_cp_p" type="text"/>
+            <button onclick="class_prof()">Search</button>
+            <div id="result_cp"></div>
+        </div>
+        <div>
+            <h3>Example of /class/[class]/proflist</h3>
+            <input id="search_cpl" type="text"/>
+            <button onclick="class_proflist()">Search</button>
+            <div id="result_cpl"></div>
+        </div>
+        <div>
+            <h3>Example of /prof/[professor]/classlist</h3>
+            <input id="search_pcl" type="text"/>
+            <button onclick="prof_classlist()">Search</button>
+            <div id="result_pcl"></div>
+        </div>
+        <div>
+            <h3>Example of /prof/[professor]</h3>
+            <input id="search_p" type="text"/>
+            <button onclick="prof()">Search</button>
+            <div id="result_p"></div>
+        </div>
+        
+        
     </body>
 </html>

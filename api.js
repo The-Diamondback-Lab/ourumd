@@ -241,20 +241,9 @@ app.get('/prof/:prof',function(req,res) {
                     req.params.prof,
                     "'"].join("");
     db.query(prof_request,function(err,rows,fields) {
-        app.get('/class/:class/proflist',function(req,res) {
-    // Query to get all professors
-    class_request = ["SELECT DISTINCT",
-                     "`TABLE 2`.`Professor Name`",
-                     "FROM `TABLE 2`",
-                     "WHERE `TABLE 2`.`Course` = '",
-                     req.params.class,
-                     "'"].join("");
-    db.query(class_request,function(err,rows,fields) {
         res.setHeader("Content-Type", "text/json");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.end(JSON.stringify(rows)); 
-    });
-});
     });
 });
 
