@@ -11,8 +11,8 @@ myApp.config(function($locationProvider,$stateProvider,$urlRouterProvider){
     $stateProvider
         .state('home',{
             url:"/",
-            templateUrl:"start.html",
-            controller:"MainCtlr"
+            templateUrl:"search.html",
+            controller:"searchCtlr"
         })
         .state('class',{
             url:"/class/:class",
@@ -53,5 +53,22 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
     
 }]);
 
+myApp.directive('search', function () {
+    return function ($scope, element) {
+        console.log(document.getElementById("searchBar"))
+        element.bind("keyup", function (event) {
+          var val = element.val();
+          if(val.length > 2) {
+            $scope.search(val);
+          }
+        });
+    };
+});
 
+myApp.controller("searchCtlr",["$scope","$http",function($scope,$http){
+    
+    $scope.search = function(val) {
+        console.log(val)
+    }
+}]);
 
