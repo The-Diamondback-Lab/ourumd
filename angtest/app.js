@@ -34,6 +34,8 @@ myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$h
         
     }).success(function(data){
         $scope.class_data = data;
+        $scope.class = $stateParams.class;
+        renderBarGraph(data);
     }).error(function(){
         console.log("Err");
     });
@@ -47,6 +49,7 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
         
     }).success(function(data){
         $scope.prof_data = data;
+        $scope.prof = $stateParams.prof;
     }).error(function(){
         console.log("Err");
     });
@@ -68,7 +71,16 @@ myApp.directive('search', function () {
 myApp.controller("searchCtlr",["$scope","$http",function($scope,$http){
     
     $scope.search = function(val) {
-        console.log(val)
+        console.log(val);
+//        var req = $http({
+//        method:"GET",
+//        url:"http://127.0.0.1:3000/grades/class/"+val,
+//        
+//        }).success(function(data){
+//            console.log(data);
+//        }).error(function(){
+//            console.log("Err");
+//        });
     }
 }]);
 
