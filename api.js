@@ -5,7 +5,7 @@ var db = require('./db');
 
 // API Endpoint to get all grade sums for a certain class
 app.get('/grades/class/:class',function(req,res){
-    // The data base request asking for every grade column possible with a givne professor
+    // The data base request asking for every grade column possible with a given professor
     var grades_request = ["SELECT",
                      "`TABLE 2`.`Course`,",
                      "`TABLE 2`.`Total`,",
@@ -187,7 +187,7 @@ app.get('/class/:class',function(req,res){
 });
 
 app.get('/class/:class/prof/:prof',function(req,res){
-    // Query to get all info on a class
+    // Query to get all info on a class with a given professor
     class_request = ["SELECT * ",
                     "FROM `TABLE 2`",
                     "WHERE `TABLE 2`.`Course` = '",
@@ -204,7 +204,7 @@ app.get('/class/:class/prof/:prof',function(req,res){
 });
 
 app.get('/class/:class/proflist',function(req,res) {
-    // Query to get all professors
+    // Query to get all professors for a given class
     class_request = ["SELECT DISTINCT",
                      "`TABLE 2`.`Professor Name`",
                      "FROM `TABLE 2`",
@@ -219,7 +219,7 @@ app.get('/class/:class/proflist',function(req,res) {
 });
 
 app.get('/prof/:prof/classlist',function(req,res) {
-    // Query to get all professors
+    // Query to get all classes a professor teaches
     prof_request = ["SELECT DISTINCT",
                      "`TABLE 2`.`Course`",
                      "FROM `TABLE 2`",
