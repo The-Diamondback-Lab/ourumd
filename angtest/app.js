@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp",["ui.router"]);
+var myApp = angular.module("myApp",["ui.router","nvd3"]);
 
 myApp.controller("MainCtlr",["$scope",function($scope){
     $scope.appname = "hello"
@@ -40,12 +40,45 @@ myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$h
         url:"http://127.0.0.1:3000/grades/class/"+$stateParams.class,
         
     }).success(function(data){
-        $scope.class_data = data;
+        $scope.class_data = cleanForPie(data);
         $scope.class = $stateParams.class;
-        renderBarGraph(data);
+        $scope.data = $scope.class_data;
     }).error(function(){
         console.log("Err");
     });
+    // Pie chart example pulled from: http://plnkr.co/edit/vtKWU0?p=preview
+    $scope.options = {
+            chart: {
+                type: 'pieChart',
+                height: 500,
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                duration: 500,
+                labelThreshold: 0.01,
+                labelSunbeamLayout: true,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
+                    }
+                }
+            }
+        };
+    function cleanForPie(data) {
+        result = [];
+        keys = Object.keys(data);
+        for(i =0; i < keys.length; i++) {
+            current = {};
+            current.key = keys[i];
+            current.y = data[keys[i]];
+            result.push(current);
+        }
+        console.log(result)
+        return result;
+    }
     
 }]);
 
