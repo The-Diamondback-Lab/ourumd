@@ -170,6 +170,20 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
         //console.log(result)
         return result;
     }
+    $scope.changeClass = function () {
+        if(document.getElementById('classlist').value != "All Classes") {
+            var prof_req = $http({
+                method:"GET",
+                url:"http://127.0.0.1:3000/grades/class/"+document.getElementById('classlist').value+"/prof/"+$stateParams.prof
+            }).success(function(data){
+                console.log(data);
+                $scope.data = cleanForPie(data);
+            }).error(function(){
+                console.log("Error - Unable to process request for new grade data for professor option")
+            })
+            console.log(document.getElementById('classlist').value)
+        }
+    }
     
 }]);
 

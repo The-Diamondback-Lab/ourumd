@@ -5,8 +5,8 @@
         <div class = "row">
             
             <div class = "col-md-1">
-                <select id="classlist" onchange="changeClass()">
-                    <option>All Classes</option>
+                <select id="classlist" ng-model="classlist" ng-change="changeClass()">
+                    <option selected="selected">All Classes</option>
                 </select>
             </div>
         </div>
