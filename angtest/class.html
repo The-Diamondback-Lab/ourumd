@@ -4,8 +4,8 @@
         <p>Description of the class goes here.</p>
         <div class = "row">    
             <div class = "col-md-1">
-                <select id="proflist">
-                    <option>All Professors</option>
+                <select id="proflist" ng-model="proflist" ng-change="changeProf()">
+                    <option selected="selected">All Professors</option>
                 </select>
             </div>
         </div>

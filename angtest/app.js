@@ -50,13 +50,13 @@ myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$h
         method:"GET",
         url:"http://127.0.0.1:3000/class/"+$stateParams.class+"/proflist"
     }).success(function(data){
-        // console.log(data)
+        console.log(data)
         for(i = 0; i < data.length; i++) {
-            
             document.getElementById("proflist").innerHTML +=
                 data[i]["Professor Name"] == "" ? 
                 "" : "<option>" + data[i]["Professor Name"] +"</option>";
         }
+        
     }).error(function(){
         console.log("Error - Unable to process class list request")
     });
@@ -92,6 +92,20 @@ myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$h
         }
         console.log(result)
         return result;
+    }
+    $scope.changeProf = function () {
+        if(document.getElementById('proflist').value != "All Professors") {
+            var prof_req = $http({
+                method:"GET",
+                url:"http://127.0.0.1:3000/grades/class/"+$stateParams.class+"/prof/"+document.getElementById('proflist').value
+            }).success(function(data){
+                console.log(data);
+                $scope.data = cleanForPie(data);
+            }).error(function(){
+                console.log("Error - Unable to process request for new grade data for professor option")
+            })
+            console.log(document.getElementById('proflist').value)
+        }
     }
     
 }]);
@@ -156,6 +170,7 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
         //console.log(result)
         return result;
     }
+    
 }]);
 
 myApp.controller("searchCtlr",["$scope","$http",function($scope,$http){
