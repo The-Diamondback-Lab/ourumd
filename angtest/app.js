@@ -35,16 +35,30 @@ myApp.config(function($locationProvider,$stateProvider,$urlRouterProvider){
 // The class template page controller
 myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$http,$stateParams){
     // When the class controller is called a request is made to the grades/class end point
-    var req = $http({
+    var class_req = $http({
         method:"GET",
-        url:"http://127.0.0.1:3000/grades/class/"+$stateParams.class,
-        
+        url:"http://127.0.0.1:3000/grades/class/"+$stateParams.class
     }).success(function(data){
         $scope.class_data = cleanForPie(data);
         $scope.class = $stateParams.class;
         $scope.data = $scope.class_data;
     }).error(function(){
         console.log("Err");
+    });
+    
+    var prof_list_req = $http({
+        method:"GET",
+        url:"http://127.0.0.1:3000/class/"+$stateParams.class+"/proflist"
+    }).success(function(data){
+        // console.log(data)
+        for(i = 0; i < data.length; i++) {
+            
+            document.getElementById("proflist").innerHTML +=
+                data[i]["Professor Name"] == "" ? 
+                "" : "<option>" + data[i]["Professor Name"] +"</option>";
+        }
+    }).error(function(){
+        console.log("Error - Unable to process class list request")
     });
     // Pie chart example pulled from: http://plnkr.co/edit/vtKWU0?p=preview
     $scope.options = {
@@ -84,16 +98,30 @@ myApp.controller("classCtlr",["$scope","$http","$stateParams",function($scope,$h
 
 myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$http,$stateParams){
     // When the professor controller is called a request is made to the grades/professor end point
-    var req = $http({
+    var prof_req = $http({
         method:"GET",
-        url:"http://127.0.0.1:3000/grades/prof/"+$stateParams.prof,
-        
+        url:"http://127.0.0.1:3000/grades/prof/"+$stateParams.prof
     }).success(function(data){
         $scope.prof_data = cleanForPie(data);
         $scope.prof = $stateParams.prof;
         $scope.data = $scope.prof_data;
     }).error(function(){
-        console.log("Err");
+        console.log("Error - Unable to process main professor request");
+    });
+    
+    var class_list_req = $http({
+        method:"GET",
+        url:"http://127.0.0.1:3000/prof/"+$stateParams.prof+"/classlist"
+    }).success(function(data){
+        // console.log(data)
+        for(i = 0; i < data.length; i++) {
+            
+            document.getElementById("classlist").innerHTML +=
+                data[i]["Course"] == "" ? 
+                "" : "<option>" + data[i]["Course"] +"</option>";
+        }
+    }).error(function(){
+        console.log("Error - Unable to process class list request")
     });
      // Pie chart example pulled from: http://plnkr.co/edit/vtKWU0?p=preview
     $scope.options = {
@@ -125,10 +153,9 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
             current.y = data[keys[i]];
             result.push(current);
         }
-        console.log(result)
+        //console.log(result)
         return result;
     }
-    
 }]);
 
 myApp.controller("searchCtlr",["$scope","$http",function($scope,$http){
