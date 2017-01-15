@@ -247,6 +247,36 @@ app.get('/prof/:prof',function(req,res) {
     });
 });
 
+app.get('/search/class/:term',function(req,res) {
+   // Query to find searched for term as a class
+    search_request = ["SELECT DISTINCT",
+                     "`TABLE 2`.`Course`",
+                     "FROM `TABLE 2`",
+                     "WHERE `TABLE 2`.`Course`",
+                     "LIKE '%"+req.params.term+"%'",
+                     "LIMIT 5"].join("");
+    db.query(search_request,function(err,rows,fields){
+        res.setHeader("Content-Type", "text/json");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.end(JSON.stringify(rows)); 
+    });
+});
+
+app.get('/search/prof/:term',function(req,res) {
+   // Query to find searched for term as a class
+    search_request = ["SELECT DISTINCT",
+                     "`TABLE 2`.`Professor Name`",
+                     "FROM `TABLE 2`",
+                     "WHERE `TABLE 2`.`Professor Name`",
+                     "LIKE '%"+req.params.term+"%'",
+                     "LIMIT 5"].join("");
+    db.query(search_request,function(err,rows,fields){
+        res.setHeader("Content-Type", "text/json");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.end(JSON.stringify(rows)); 
+    });
+});
+
 app.get('/class/')
 app.listen(3000);
 console.log('Running Express...');
