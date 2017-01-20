@@ -1,4 +1,7 @@
 <p>DBKGrades</p>
 <div class="form-group">
-    
+    <label for="classSearchBox">Search for a Class</label>
+    <autocomplete id="classSearchBox" ng-model="classSearch" attr-placeholder="type to search classes..." click-activation="true" data="classes" on-type="searchClass" on-select="goToClass"></autocomplete>
+    <label for="profSearchBox">Search for a Professor</label>
+    <autocomplete id="profSearchBox" ng-model="profSearch" attr-placeholder="type to search professors..." click-activation="true" data="profs" on-type="searchProf" on-select="goToProf"></autocomplete>
 </div>

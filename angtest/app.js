@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp",["ui.router","nvd3"]);
+var myApp = angular.module("myApp",["ui.router","nvd3","autocomplete"]);
 
 myApp.controller("MainCtlr",["$scope",function($scope){
     $scope.appname = "hello"
@@ -187,8 +187,56 @@ myApp.controller("profCtlr",["$scope","$http","$stateParams",function($scope,$ht
     
 }]);
 
-myApp.controller("searchCtlr",["$scope","$http",function($scope,$http){
+myApp.controller("searchCtlr",["$scope","$http","$state",function($scope,$http,$state){
+    $scope.classes = [];
+    $scope.profs = [];
     
+    $scope.searchClass = function(searchTerm) {
+        if(searchTerm.length > 3) {
+            var searchClassReq = $http({
+                method:"GET",
+                url:"http://127.0.0.1:3000/search/class/"+searchTerm
+            }).success(function(data){
+                result_arr = [];
+                for(i = 0; i < data.length; i++) {
+                    result_arr.push(data[i]["Course"])
+                }
+                console.log(data)
+                console.log(result_arr);
+                $scope.classes = result_arr;
+                
+            }).error(function(){
+                console.log("Error - Unable to process request to search class")
+            });
+        }
+    };
+    
+    $scope.goToClass = function(selectedClass) {
+        $state.go("class",{class:selectedClass})
+    };
+    
+    $scope.searchProf = function(searchTerm) {
+        if(searchTerm.length > 3) {
+            var searchProfReq = $http({
+                method:"GET",
+                url:"http://127.0.0.1:3000/search/prof/"+searchTerm
+            }).success(function(data){
+                console.log(data)
+                result_arr = [];
+                for(i = 0; i < data.length; i++) {
+                    result_arr.push(data[i]["Professor Name"])
+                }
+                
+                $scope.profs = result_arr;
+            }).error(function(){
+                console.log("Error - Unable to process request to search professors")
+            });
+        }
+    }
+    
+    $scope.goToProf = function(selectedProf) {
+        $state.go("professor",{prof:selectedProf})
+    }
 
 }]);
 
